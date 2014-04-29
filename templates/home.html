@@ -1,0 +1,83 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<body>
+<table id="randomNumberTable" border="1">
+</table>
+
+<script type="text/javascript">
+
+function cycleColors() {
+    currentBgColors = getBgColors();
+    newBgColors = cycleColorList(currentBgColors);
+    setBgColors(newBgColors);
+}
+
+function cycleColorList() {
+    var colorList = getBgColors();
+    var newColorList = new Array(colorList.length);
+    for  (var i = 0; i < colorList.length -1; i++) {
+        newColorList[i+1] = colorList[i];        
+    }
+    newColorList[0] = colorList[colorList.length -1];
+    return newColorList;
+}
+
+function getRGB(value) {
+    var rgbValue = new Array();
+    do {
+        rgbValue.push(value.substring(0, 3));
+    } while((value = value.substring(3, value.length)) != "");
+    return rgbValue;
+}
+
+function createColorList(data) {
+    var colors = new Array(data.length);
+    for ( var i = 0; i < colors.length; i++) {
+        colors[i] = 'rgb('+ getRGB(data[i]) +')';
+    }
+    return colors;
+}
+
+function getBgColors() {
+    var tableCells = document.getElementsByClassName("colorCyclable");
+    var bgColors = new Array(tableCells.length)
+    for (var i = 0; i < bgColors.length; i++) {
+        bgColors[i] = tableCells[i].style.backgroundColor;
+    }
+    return bgColors;
+}
+
+function setBgColors(colorList) {
+    var tableCells = document.getElementsByClassName("colorCyclable");
+    for (i = 0; i < tableCells.length; i++) {
+        console.log('colorList['+i+']:' + colorList[i])
+        color = colorList[i] ;
+        tableCells[i].style.backgroundColor = color;
+    }    
+}
+
+function createTable(data) {  // Makes a 3 x 3 table from a list with 9 elements. 
+    for (i = 0; i < data.length; i++) {
+        offset = i;
+        var row = $("<tr />");
+        for (var x = offset; x < offset+3; x++) {
+            row.append("<td class='colorCyclable'>" + data[x] + "</td>");
+        }
+        $("#randomNumberTable").append(row);
+        i = i + 2;
+    }
+}
+        
+$.ajax({
+    url: 'randomnumbers/nine_random_numbers'
+}).done(function (data) {
+    createTable(data);
+    colors = createColorList(data);
+    setBgColors(colors);
+});
+</script>
+<button onClick="cycleColors()">Cycle Colors</button>
+</body>
+</html>
