@@ -5,7 +5,7 @@ Requires Django==1.6 and python => 2.7.6
 
 Server side:
 ------------
-Create's a list of random 9 digit numbers, 9 elements long and returns it as a json response. 
+Creates a list of random 9 digit numbers, 9 elements long and returns it as a json response. 
 * The 9 digit numbers are actually created from concatenation of 3 random numbers, each ranging from 100 to 255.
 
 Client side:
