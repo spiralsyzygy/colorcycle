@@ -1,4 +1,4 @@
-CLover Wireless Coding Challenge:
+Clover Wireless Coding Challenge:
 =================================
 
 Requires Django==1.6 and python => 2.7.6
